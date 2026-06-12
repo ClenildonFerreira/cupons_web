@@ -1,0 +1,35 @@
+<div class="min-h-screen p-6 relative overflow-hidden bg-gradient-to-br from-white via-[#fff0f3] to-[#ffe5ec]">
+  <!-- Header -->
+  <div class="max-w-5xl mx-auto flex items-center justify-between mb-8">
+    <button (click)="goBack()" class="text-amor-red hover:text-amor-pink transition-colors p-2 rounded-full hover:bg-white shadow-sm flex items-center bg-white/50 backdrop-blur-sm border border-white">
+      <i class="pi pi-arrow-left text-xl p-1"></i>
+    </button>
+    <h2 class="text-3xl font-bold text-gray-800 font-serif text-center flex-1">Meus <span class="text-amor-red">Cupons</span></h2>
+    <div class="w-10"></div> <!-- Spacer -->
+  </div>
+
+  <!-- Grid -->
+  <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let coupon of coupons" class="group relative bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-sm hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-amor-pink/30 cursor-pointer overflow-hidden">
+      <!-- Decorator -->
+      <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-bl from-amor-gold/30 to-amor-pink/20 rounded-full blur-2xl group-hover:bg-amor-red/20 transition-all"></div>
+      
+      <div class="flex items-center space-x-4 mb-4 relative z-10">
+        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amor-red to-amor-pink flex items-center justify-center text-white shadow-inner">
+          <i [class]="coupon.icon + ' text-xl'"></i>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800">{{ coupon.title }}</h3>
+      </div>
+      
+      <p class="text-gray-600 text-sm leading-relaxed relative z-10">{{ coupon.desc }}</p>
+
+      <div class="mt-6 flex justify-end relative z-10">
+        <span class="text-xs font-semibold uppercase tracking-wider text-amor-red bg-amor-red/10 px-4 py-2 rounded-full group-hover:bg-amor-red group-hover:text-white transition-colors duration-300">Resgatar</span>
+      </div>
+    </div>
+  </div>
+  
+  <p class="text-center mt-12 text-sm text-gray-500 font-medium tracking-wide opacity-70">
+    Selecione com sabedoria, meu amor ❤️
+  </p>
+</div>
