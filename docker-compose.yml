@@ -2,6 +2,17 @@ services:
   frontend:
     build: .
     container_name: cupons-amor-front
-    ports:
-      - "8081:80"
+    expose:
+      - "80"
     restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cupons-front.rule=Host(`cupons.seu-dominio.com`)"
+      - "traefik.http.routers.cupons-front.entrypoints=websecure"
+      - "traefik.http.routers.cupons-front.tls.certresolver=myresolver" # Mude para o nome do seu resolver Let's Encrypt
+    networks:
+      - traefik-net # Mude para a sua rede do Traefik
+
+networks:
+  traefik-net:
+    external: true
