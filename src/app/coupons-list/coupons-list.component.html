@@ -1,22 +1,21 @@
-<div class="bg-[#fdf0f3] sm:bg-gray-100 min-h-screen flex items-center justify-center font-sans">
-  <div class="w-full sm:max-w-[393px] h-[100dvh] pt-[max(env(safe-area-inset-top),0px)] pb-[max(env(safe-area-inset-bottom),0px)] bg-[#fdf0f3] flex flex-col relative overflow-hidden shadow-2xl sm:rounded-[3rem] sm:border-[8px] sm:border-gray-900">
-    
-    <!-- Custom Status Bar Background -->
-    <div class="pt-4 pb-4 px-6 bg-white/80 backdrop-blur-xl border-b border-gray-200/50 sticky top-0 z-40 flex items-center justify-between shadow-sm">
-      <button (click)="goBack()" class="w-10 h-10 flex items-center justify-center text-amor-red hover:bg-amor-red/10 rounded-full transition-colors">
-        <i class="pi pi-angle-left text-2xl font-bold"></i>
-      </button>
-      <h2 class="text-xl font-black text-gray-800 tracking-wide font-serif">Meus <span class="text-amor-red">Cupons</span></h2>
-      <div class="w-10 h-10 flex items-center justify-center">
-        <i class="pi pi-ticket text-gray-400 text-xl"></i>
-      </div>
+<div class="w-full min-h-[100dvh] pt-[max(env(safe-area-inset-top),0px)] pb-[max(env(safe-area-inset-bottom),0px)] bg-[#fdf0f3] flex flex-col relative overflow-hidden font-sans">
+  
+  <!-- Custom Status Bar Background -->
+  <div class="pt-4 pb-4 px-6 bg-white/80 backdrop-blur-xl border-b border-gray-200/50 sticky top-0 z-40 flex items-center justify-between shadow-sm">
+    <button (click)="goBack()" class="w-10 h-10 flex items-center justify-center text-amor-red hover:bg-amor-red/10 rounded-full transition-colors">
+      <i class="pi pi-angle-left text-2xl font-bold"></i>
+    </button>
+    <h2 class="text-xl font-black text-gray-800 tracking-wide font-serif">Meus <span class="text-amor-red">Cupons</span></h2>
+    <div class="w-10 h-10 flex items-center justify-center">
+      <i class="pi pi-ticket text-gray-400 text-xl"></i>
     </div>
+  </div>
 
-    <!-- Tickets List -->
-  <div class="p-5 space-y-5 flex-grow overflow-y-auto pb-32">
+  <!-- Tickets List -->
+  <div class="p-5 space-y-5 flex-grow overflow-y-auto pb-32 max-w-lg mx-auto w-full">
      <div *ngFor="let coupon of coupons" 
           (click)="openRedeemModal(coupon)"
-          class="relative w-full sm:max-w-[393px] mx-auto rounded-[2rem] p-6 shadow-xl overflow-hidden transition-all duration-300"
+          class="relative w-full mx-auto rounded-[2rem] p-6 shadow-xl overflow-hidden transition-all duration-300"
           [ngClass]="coupon.redeemed ? 'bg-gray-200 opacity-60 grayscale' : 'bg-gradient-to-br from-[#d90429] to-[#ff4d6d] text-white cursor-pointer hover:scale-[1.02] active:scale-95'">
           
           <!-- Inner Glow -->
@@ -48,9 +47,9 @@
   <!-- iOS Bottom Sheet Modal -->
   <div *ngIf="showModal" class="fixed inset-0 z-50 flex items-end justify-center">
       <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" (click)="closeModal()"></div>
-      <div class="bg-white w-full max-w-[450px] rounded-t-[2.5rem] p-8 relative z-10 animate-slide-up shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
+      <div class="bg-white w-full rounded-t-[2.5rem] p-8 relative z-10 animate-slide-up shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
          <div class="w-16 h-1.5 bg-gray-200 rounded-full mx-auto mb-8"></div>
-         <div class="text-center">
+         <div class="text-center max-w-md mx-auto">
             <div class="w-20 h-20 bg-gradient-to-br from-red-50 to-rose-100 rounded-full flex items-center justify-center mx-auto mb-5 shadow-inner border border-red-100">
                <i [class]="selectedCoupon?.icon + ' text-4xl text-amor-red'"></i>
             </div>
@@ -84,5 +83,4 @@
      </div>
   </div>
 
-</div>
 </div>
