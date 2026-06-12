@@ -22,8 +22,7 @@ export class AdminComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient) {}
 
   private get baseUrl() {
-    // Se estiver no modo dev, aponta pro Spring. Na VPS com Traefik, usa rota relativa limpa.
-    return window.location.port === '4200' ? `http://localhost:8080` : ``;
+    return window.location.port === '4200' ? `http://localhost:8080` : `http://srv1694053.hstgr.cloud:8080`;
   }
 
   ngOnInit() {
