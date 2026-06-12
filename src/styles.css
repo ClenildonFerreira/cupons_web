@@ -8,4 +8,45 @@ body {
   background: linear-gradient(135deg, #fff0f3 0%, #ffb3c6 100%);
   min-height: 100vh;
   margin: 0;
+  overflow-x: hidden;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(110vh) scale(0.5) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-20vh) scale(1.5) rotate(360deg); opacity: 0; }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.2); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.2); }
+  70% { transform: scale(1); }
+}
+
+.floating-heart {
+  position: absolute;
+  animation: floatUp 15s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.floating-heart:nth-child(even) {
+  animation-duration: 12s;
+  animation-direction: reverse;
+}
+
+.sparkle-effect {
+  animation: sparkle 3s ease-in-out infinite;
+}
+
+.heartbeat {
+  animation: heartbeat 2s infinite;
 }
