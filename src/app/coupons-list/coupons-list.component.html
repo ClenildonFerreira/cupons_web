@@ -1,47 +1,88 @@
-<div class="min-h-screen p-6 relative overflow-hidden bg-gradient-to-br from-[#fff0f3] via-[#ffb3c6] to-[#ffccd5]">
-  <!-- Floating Hearts Background -->
-  <div class="absolute inset-0 pointer-events-none opacity-30">
-    <div class="floating-heart text-amor-red text-4xl" style="left: 5%; animation-delay: 1s;">❤️</div>
-    <div class="floating-heart text-amor-pink text-5xl" style="left: 25%; animation-delay: 4s;">💖</div>
-    <div class="floating-heart text-amor-red text-2xl" style="left: 45%; animation-delay: 2s;">💘</div>
-    <div class="floating-heart text-amor-pink text-3xl" style="left: 65%; animation-delay: 5s;">💓</div>
-    <div class="floating-heart text-amor-gold text-4xl" style="left: 85%; animation-delay: 0s;">✨</div>
-    <div class="floating-heart text-amor-red text-6xl" style="left: 15%; animation-delay: 7s;">💞</div>
-    <div class="floating-heart text-amor-pink text-3xl" style="left: 75%; animation-delay: 3s;">💝</div>
-    <div class="floating-heart text-amor-gold text-2xl" style="left: 35%; animation-delay: 6s;">✨</div>
-  </div>
-
-  <!-- Header -->
-  <div class="max-w-5xl mx-auto flex items-center justify-between mb-8">
-    <button (click)="goBack()" class="text-amor-red hover:text-amor-pink transition-colors p-2 rounded-full hover:bg-white shadow-sm flex items-center bg-white/50 backdrop-blur-sm border border-white">
-      <i class="pi pi-arrow-left text-xl p-1"></i>
-    </button>
-    <h2 class="text-3xl font-bold text-gray-800 font-serif text-center flex-1">Meus <span class="text-amor-red">Cupons</span></h2>
-    <div class="w-10"></div> <!-- Spacer -->
-  </div>
-
-  <!-- Grid -->
-  <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div *ngFor="let coupon of coupons" class="group relative bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-sm hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-amor-pink/30 cursor-pointer overflow-hidden">
-      <!-- Decorator -->
-      <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-bl from-amor-gold/30 to-amor-pink/20 rounded-full blur-2xl group-hover:bg-amor-red/20 transition-all"></div>
-      
-      <div class="flex items-center space-x-4 mb-4 relative z-10">
-        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amor-red to-amor-pink flex items-center justify-center text-white shadow-inner">
-          <i [class]="coupon.icon + ' text-xl'"></i>
-        </div>
-        <h3 class="text-xl font-bold text-gray-800">{{ coupon.title }}</h3>
-      </div>
-      
-      <p class="text-gray-600 text-sm leading-relaxed relative z-10">{{ coupon.desc }}</p>
-
-      <div class="mt-6 flex justify-end relative z-10">
-        <span class="text-xs font-semibold uppercase tracking-wider text-amor-red bg-amor-red/10 px-4 py-2 rounded-full group-hover:bg-amor-red group-hover:text-white transition-colors duration-300">Resgatar</span>
+<div class="bg-[#fdf0f3] sm:bg-gray-100 min-h-screen flex items-center justify-center font-sans">
+  <div class="w-full max-w-[393px] h-[100dvh] pt-[max(env(safe-area-inset-top),0px)] pb-[max(env(safe-area-inset-bottom),0px)] bg-[#fdf0f3] flex flex-col relative overflow-hidden shadow-2xl sm:rounded-[3rem] sm:border-[8px] sm:border-gray-900">
+    
+    <!-- Custom Status Bar Background -->
+    <div class="pt-4 pb-4 px-6 bg-white/80 backdrop-blur-xl border-b border-gray-200/50 sticky top-0 z-40 flex items-center justify-between shadow-sm">
+      <button (click)="goBack()" class="w-10 h-10 flex items-center justify-center text-amor-red hover:bg-amor-red/10 rounded-full transition-colors">
+        <i class="pi pi-angle-left text-2xl font-bold"></i>
+      </button>
+      <h2 class="text-xl font-black text-gray-800 tracking-wide font-serif">Meus <span class="text-amor-red">Cupons</span></h2>
+      <div class="w-10 h-10 flex items-center justify-center">
+        <i class="pi pi-ticket text-gray-400 text-xl"></i>
       </div>
     </div>
+
+    <!-- Tickets List -->
+  <div class="p-5 space-y-5 flex-grow overflow-y-auto pb-32">
+     <div *ngFor="let coupon of coupons" 
+          (click)="openRedeemModal(coupon)"
+          class="relative w-full max-w-[393px] mx-auto rounded-[2rem] p-6 shadow-xl overflow-hidden transition-all duration-300"
+          [ngClass]="coupon.redeemed ? 'bg-gray-200 opacity-60 grayscale' : 'bg-gradient-to-br from-[#d90429] to-[#ff4d6d] text-white cursor-pointer hover:scale-[1.02] active:scale-95'">
+          
+          <!-- Inner Glow -->
+          <div class="absolute -right-10 -top-10 w-32 h-32 bg-white/20 rounded-full blur-2xl pointer-events-none"></div>
+          
+          <div class="flex items-center gap-4 relative z-10">
+             <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-md shadow-inner">
+                <i [class]="coupon.icon + ' text-2xl ' + (coupon.redeemed ? 'text-gray-500' : 'text-white')"></i>
+             </div>
+             <div class="flex-1">
+                <h3 class="text-xl font-black font-serif leading-tight">{{ coupon.title }}</h3>
+                <p class="text-xs opacity-90 mt-1.5 font-medium">{{ coupon.desc }}</p>
+             </div>
+          </div>
+          
+          <!-- Dashed line for ticket cutout effect -->
+          <div class="mt-5 border-t-[3px] border-dashed border-white/30 pt-4 flex justify-between items-center relative z-10">
+             <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-80" [ngClass]="coupon.redeemed ? 'text-gray-500' : 'text-red-100'">Validade: Eterna</span>
+             <span *ngIf="!coupon.redeemed" class="bg-white text-amor-red text-[11px] font-black uppercase tracking-wider px-5 py-2 rounded-full shadow-lg">Resgatar</span>
+             <span *ngIf="coupon.redeemed" class="bg-gray-500 text-white text-[11px] font-black uppercase px-5 py-2 rounded-full shadow-inner">Utilizado</span>
+          </div>
+          
+          <!-- Ticket side cutouts -->
+          <div class="absolute -left-4 bottom-[2.1rem] w-8 h-8 bg-[#fdf0f3] rounded-full shadow-inner"></div>
+          <div class="absolute -right-4 bottom-[2.1rem] w-8 h-8 bg-[#fdf0f3] rounded-full shadow-inner"></div>
+     </div>
   </div>
-  
-  <p class="text-center mt-12 text-sm text-gray-500 font-medium tracking-wide opacity-70">
-    Selecione com sabedoria, meu amor ❤️
-  </p>
+
+  <!-- iOS Bottom Sheet Modal -->
+  <div *ngIf="showModal" class="fixed inset-0 z-50 flex items-end justify-center">
+      <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" (click)="closeModal()"></div>
+      <div class="bg-white w-full max-w-[450px] rounded-t-[2.5rem] p-8 relative z-10 animate-slide-up shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
+         <div class="w-16 h-1.5 bg-gray-200 rounded-full mx-auto mb-8"></div>
+         <div class="text-center">
+            <div class="w-20 h-20 bg-gradient-to-br from-red-50 to-rose-100 rounded-full flex items-center justify-center mx-auto mb-5 shadow-inner border border-red-100">
+               <i [class]="selectedCoupon?.icon + ' text-4xl text-amor-red'"></i>
+            </div>
+            <h3 class="text-2xl font-black text-gray-800 mb-2 font-serif">Resgatar Cupom?</h3>
+            <p class="text-gray-500 text-sm mb-8 leading-relaxed px-2">Você está prestes a usar o seu <b>{{ selectedCoupon?.title }}</b>. Tem certeza de que deseja resgatar agora?</p>
+            
+            <div class="space-y-3">
+               <button (click)="confirmRedeem()" class="w-full bg-gradient-to-r from-[#d90429] to-[#ff4d6d] text-white font-black text-lg py-4 rounded-full shadow-[0_8px_20px_rgba(230,57,70,0.4)] active:scale-95 transition-transform tracking-wide">
+                  Sim, Quero Agora!
+               </button>
+               <button (click)="closeModal()" class="w-full bg-gray-100 text-gray-600 font-bold text-lg py-4 rounded-full hover:bg-gray-200 active:scale-95 transition-all">
+                  Guardar para Depois
+               </button>
+            </div>
+         </div>
+      </div>
+  </div>
+
+  <!-- Success Confetti Overlay -->
+  <div *ngIf="showSuccess" class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-md">
+     <div class="bg-white p-8 rounded-[2rem] text-center animate-bounce-in max-w-[320px] shadow-2xl relative overflow-hidden">
+        <!-- Success Rays -->
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-50 to-transparent opacity-50"></div>
+        
+        <div class="relative w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner border-[4px] border-white">
+           <i class="pi pi-check text-5xl text-green-500 font-bold"></i>
+        </div>
+        <h3 class="text-3xl font-black text-gray-800 mb-3 font-serif">Prontinho!</h3>
+        <p class="text-gray-600 font-medium leading-relaxed mb-2">O cupom foi resgatado com sucesso.</p>
+        <p class="text-xs text-amor-red font-bold uppercase tracking-widest mt-4">Prepare-se para o amor!</p>
+     </div>
+  </div>
+
+</div>
 </div>

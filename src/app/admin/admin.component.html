@@ -1,0 +1,102 @@
+<div class="min-h-screen bg-gray-900 text-gray-100 font-sans relative overflow-hidden flex flex-col">
+  
+  <!-- ADMIN LOGIN SCREEN -->
+  <div *ngIf="!isAuthenticated" class="flex-grow flex items-center justify-center p-6 relative z-10">
+    <div class="w-full max-w-sm bg-gray-800 rounded-3xl p-8 shadow-2xl border border-gray-700 text-center">
+      <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
+        <i class="pi pi-shield text-2xl text-blue-400"></i>
+      </div>
+      <h2 class="text-2xl font-bold mb-2">Acesso Restrito</h2>
+      <p class="text-gray-400 text-sm mb-6">Área do Administrador</p>
+      
+      <div class="relative mb-6">
+        <input 
+          type="password" 
+          [(ngModel)]="adminPassword" 
+          (keyup.enter)="checkPassword()"
+          class="w-full bg-gray-900 border border-gray-700 rounded-xl py-3 px-4 text-center text-white placeholder-gray-500 focus:border-blue-500 outline-none transition-all"
+          placeholder="Senha Admin"
+        >
+        <div *ngIf="showError" class="absolute -bottom-6 left-0 right-0 text-red-400 text-xs font-bold animate-bounce-in">
+          Senha incorreta!
+        </div>
+      </div>
+      
+      <button 
+        (click)="checkPassword()"
+        class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition-colors mb-4"
+      >
+        Acessar Painel
+      </button>
+      
+      <button (click)="goBack()" class="text-gray-500 hover:text-white text-sm transition-colors">Voltar ao App</button>
+    </div>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div *ngIf="isAuthenticated" class="flex-grow flex flex-col relative z-10">
+    <div class="bg-gray-800 p-4 border-b border-gray-700 flex items-center justify-between shadow-md">
+      <div class="flex items-center gap-3">
+        <i class="pi pi-chart-pie text-blue-400 text-xl"></i>
+        <h1 class="text-lg font-bold">Painel de Controle</h1>
+      </div>
+      <button (click)="logout()" class="w-8 h-8 rounded-full bg-gray-700 hover:bg-red-500 flex items-center justify-center transition-colors">
+        <i class="pi pi-sign-out text-sm"></i>
+      </button>
+    </div>
+
+    <div class="p-6 overflow-y-auto">
+      
+      <div class="grid grid-cols-2 gap-4 mb-8">
+        <div class="bg-gray-800 rounded-2xl p-4 border border-gray-700">
+          <p class="text-gray-400 text-xs font-bold uppercase mb-1">Servidor Backend</p>
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full" [ngClass]="coupons.length > 0 ? 'bg-green-500' : 'bg-red-500'"></div>
+            <span class="font-bold">{{ coupons.length > 0 ? 'Online' : 'Offline / Vazio' }}</span>
+          </div>
+        </div>
+        <div class="bg-gray-800 rounded-2xl p-4 border border-gray-700">
+          <p class="text-gray-400 text-xs font-bold uppercase mb-1">Cupons Registrados</p>
+          <div class="flex items-center gap-2">
+            <i class="pi pi-ticket text-blue-400"></i>
+            <span class="font-bold text-xl">{{ coupons.length }}</span>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+        Gerenciamento de Cupons
+      </h2>
+
+      <div *ngIf="isLoading" class="text-center py-10">
+        <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
+        <p class="mt-4 text-gray-400">Buscando banco de dados...</p>
+      </div>
+
+      <div *ngIf="!isLoading && coupons.length === 0" class="bg-red-900/20 border border-red-500/30 rounded-xl p-6 text-center text-red-200">
+        <i class="pi pi-database text-3xl mb-3 text-red-400"></i>
+        <h3 class="font-bold mb-1">Banco Vazio ou Offline</h3>
+        <p class="text-sm">Você precisa reiniciar a API Java para rodar a migração V2_Seed_Coupons ou ligar o servidor no port 8080.</p>
+      </div>
+
+      <div *ngIf="!isLoading && coupons.length > 0" class="space-y-3">
+        <div *ngFor="let coupon of coupons" class="bg-gray-800 rounded-xl p-4 border border-gray-700 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
+              <i [class]="coupon.icon + ' text-gray-300'"></i>
+            </div>
+            <div>
+              <p class="font-bold text-sm">{{ coupon.title }}</p>
+              <p class="text-xs text-gray-400 truncate w-48">{{ coupon.description }}</p>
+            </div>
+          </div>
+          <div>
+            <span *ngIf="coupon.status === 'AVAILABLE'" class="bg-green-500/20 text-green-400 text-[10px] font-bold uppercase px-3 py-1 rounded-full border border-green-500/30">Livre</span>
+            <span *ngIf="coupon.status === 'REDEEMED'" class="bg-red-500/20 text-red-400 text-[10px] font-bold uppercase px-3 py-1 rounded-full border border-red-500/30">Usado</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
