@@ -10,9 +10,9 @@ import { ButtonModule } from 'primeng/button';
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
-  wifeName = 'Meu Amor';
+  wifeName = 'docinho de coco';
   daysTogether = 0;
-  startDate = new Date('2023-06-12');
+  startDate = new Date('2023-08-03');
 
   constructor(private router: Router) {}
 
