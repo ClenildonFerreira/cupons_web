@@ -22,7 +22,9 @@ export class AdminComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient) {}
 
   private get baseUrl() {
-    return window.location.port === '4200' ? `http://${window.location.hostname}:8080` : '';
+    // Se estiver rodando localmente no ng serve, usa o localhost.
+    // Se estiver publicado no Frontend (Nuvem), aponta direto para a API da Hostinger!
+    return window.location.port === '4200' ? `http://localhost:8080` : `http://187.77.200.244:8080`;
   }
 
   ngOnInit() {

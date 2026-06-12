@@ -1,0 +1,7 @@
+services:
+  frontend:
+    build: .
+    container_name: cupons-amor-front
+    ports:
+      - "80:80"
+    restart: always
