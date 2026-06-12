@@ -16,7 +16,7 @@
   <div class="p-5 space-y-5 flex-grow overflow-y-auto pb-32">
      <div *ngFor="let coupon of coupons" 
           (click)="openRedeemModal(coupon)"
-          class="relative w-full max-w-[393px] mx-auto rounded-[2rem] p-6 shadow-xl overflow-hidden transition-all duration-300"
+          class="relative w-full sm:max-w-[393px] mx-auto rounded-[2rem] p-6 shadow-xl overflow-hidden transition-all duration-300"
           [ngClass]="coupon.redeemed ? 'bg-gray-200 opacity-60 grayscale' : 'bg-gradient-to-br from-[#d90429] to-[#ff4d6d] text-white cursor-pointer hover:scale-[1.02] active:scale-95'">
           
           <!-- Inner Glow -->
